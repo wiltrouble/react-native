@@ -6,11 +6,13 @@ import firebase from "../database/firebase";
 
 export const UserDetails = (props) => {
 
-    const [user, setUser] = useState({
+    const initialState = {
         id: '',
         firstName: '',
         lastName: '',
-    })
+    }
+
+    const [user, setUser] = useState(initialState)
 
     const [loading, setLoading] = useState(true)
 
@@ -37,6 +39,16 @@ export const UserDetails = (props) => {
         const dbRef = firebase.db.collection('users').doc(props.route.params.userId);
         await dbRef.delete();
         props.navigation.navigate('UsersList')    
+    }
+
+    const updateUser = () => {
+        const dbRef = firebase.db.collection('users').doc(user.id)
+        await dbRef.set({
+            lastName: user.lastName,
+            firstName: user.firstName
+        })
+        setUser(initialState)
+        props.navigation.navigate('UsersList')
     }
 
     const openConfirmationAlert = () => {
@@ -69,7 +81,7 @@ export const UserDetails = (props) => {
 
             <View style={styles.inputGroup}>
                 <Button color="#E37399" style={styles.button} title='Update User'
-                />
+                    onPress={() => updateUser()}/>
             </View>
             <View>
                 <Button style={styles.button} title='Delete'

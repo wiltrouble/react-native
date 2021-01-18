@@ -17,11 +17,6 @@ export const Menu = (props) => {
                 <Button title="Create User"
                 onPress={() => props.navigation.navigate('CreateUser')}/>
             </View>
-
-            <View>
-                <Button title="Create User"
-                onPress={() => props.navigation.navigate('CreateUser')}/>
-            </View>
             
 
             <Button title="Students"
